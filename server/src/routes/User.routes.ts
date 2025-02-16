@@ -11,7 +11,7 @@ userRouter.route('/login').post(
     (req, res) => { new UserController().login(req,res); }
 )
 
-userRouter.route('/edit').patch(
+userRouter.route('/changePassword').patch(
     (req, res, next) => { new UserController().authenticateUser(req,res, next) },
     (req, res) => { new UserController().changePassword(req,res); }
 )
