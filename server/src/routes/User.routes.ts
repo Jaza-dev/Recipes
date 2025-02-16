@@ -12,10 +12,12 @@ userRouter.route('/login').post(
 )
 
 userRouter.route('/edit').patch(
-    (req, res) => { new UserController().edit(req,res); }
+    (req, res, next) => { new UserController().authenticateUser(req,res, next) },
+    (req, res) => { new UserController().changePassword(req,res); }
 )
 
 userRouter.route('/delete').delete(
+    (req, res, next) => { new UserController().authenticateUser(req,res, next) },
     (req, res) => { new UserController().delete(req,res); }
 )
 
