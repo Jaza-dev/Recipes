@@ -14,12 +14,12 @@ export class UserController {
             const updatedUser = await UserModel.findByIdAndUpdate(req.user.userId, { password:hashedNewPassword }, {new:true, runValidators:true});
 
             if (!updatedUser) {
-                return res.status(404).json({ error: "User not found" });
+                return res.status(404).json({ message: "User not found" });
             }
 
             res.json({ message: "Password changed successfully" });
         } catch (err) {
-            res.status(500).json({ error: "Server error" });
+            res.status(500).json({ message: "Server error" });
         }
     }
 
@@ -27,11 +27,11 @@ export class UserController {
         try {
             const deletedUser = await UserModel.findByIdAndDelete(req.user.userId);
             if (!deletedUser) {
-                return res.status(404).json({ error: "User not found" });
+                return res.status(404).json({ message: "User not found" });
             }
             res.json({ message: "User deleted successfully" });
         } catch (err) {
-            res.status(500).json({ error: "Server error" });
+            res.status(500).json({ message: "Server error" });
         }
     }
 
@@ -46,7 +46,7 @@ export class UserController {
 
             res.json({ message: "Successfull logout" });
         } catch (err) {
-            res.status(500).json({ error: "Server error" });
+            res.status(500).json({ message: "Server error" });
         }
     }
 }

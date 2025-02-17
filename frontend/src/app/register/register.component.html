@@ -1,0 +1,34 @@
+<div class="container">
+    <br><br><br><br>
+    <div class="card shadow p-4 mx-auto mt-5" style="max-width: 400px; border-radius: 15px;">
+        <!-- Step 1: Ask for name -->
+        <div *ngIf="!showNextStep">
+            <h3 class="text-center">Welcome</h3><br>
+            <label class="form-label">How should we call you?</label>
+            <input type="text" [(ngModel)]="name" class="form-control" placeholder="Enter your name">
+            <button class="btn btn-primary mt-3 w-100" (click)="proceedToNextStep()">Next</button>
+            <p *ngIf="errorMessage" class="text-danger"><br>{{errorMessage}}</p>
+        </div>
+
+        <!-- Step 2: Show Email & Password (Dynamically Revealed) -->
+        <div *ngIf="showNextStep">
+            <h3 class="text-center">Welcome {{name}}!</h3><br>
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" placeholder="Enter your email" [(ngModel)]="email">
+
+            <label class="form-label mt-2">Password</label>
+            <input type="password" class="form-control" placeholder="Enter your password" [(ngModel)]="password">
+
+            <label class="form-label mt-2">Repeat Password</label>
+            <input type="password" class="form-control" placeholder="Enter your password again" [(ngModel)]="repeatedPassword">
+
+            <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-secondary" (click)="goBack()"><i class="bi bi-arrow-left"></i></button>
+                <button class="btn btn-success" (click)="register()">Register</button>
+            </div>
+            <p *ngIf="errorMessage" class="text-danger"><br>{{errorMessage}}</p>
+        </div>
+
+    </div>
+  </div>
+  

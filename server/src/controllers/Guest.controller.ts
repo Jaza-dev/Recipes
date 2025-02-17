@@ -3,18 +3,16 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import UserModel from '../models/User.model';
 
-//export const secretKey:string = "a4d9f3c9e7e8e3b0b8d1b8e93c88c8baf6f0b5c6e2d9f7a5e3a9b7d8e2b1c9f6";
-
 export class GuestController {
 
     register = async (req: express.Request, res: express.Response) => {
         try {
 
-            const { name, surename, email, password } = req.body;
+            const { name, email, password } = req.body;
 
             // Check if the user already exists
             if (await UserModel.exists({ email })) {
-                return res.status(400).json({ error: "User with this email already exists!" });
+                return res.status(400).json({ message: "User with this email already exists!" });
             }
 
             const hashedPassword = await bcrypt.hash(password, 10);
@@ -22,7 +20,6 @@ export class GuestController {
             // Create a new user
             const newUser = new UserModel({
                 name,
-                surename,
                 email,
                 password: hashedPassword,
                 createdAt: new Date(),
@@ -33,7 +30,7 @@ export class GuestController {
             return res.status(201).json({ message: "User registered successfully." });
         } catch (err) {
             console.error(err);
-            return res.status(500).json({ error: "Internal Server Error" });
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     };
     
@@ -43,11 +40,11 @@ export class GuestController {
 
             const user = await UserModel.findOne({ email });
 
-            if(!user) return res.status(400).json({ error: "Email or password are incorrect!" });
+            if(!user) return res.status(400).json({ message: "Email or password are incorrect!" });
             
             if(user.password) {
                 const isMatch = await bcrypt.compare(password, user.password);
-                if(!isMatch) return res.status(400).json({ error: "Email or password are incorrect!" });
+                if(!isMatch) return res.status(400).json({ message: "Email or password are incorrect!" });
             }
             
             if(!process.env.SECRET_KEY) {
@@ -63,7 +60,7 @@ export class GuestController {
 
         } catch(err) {
             console.error(err);
-            return res.status(500).json({ error: "Internal Server Error" });
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     }
 }
