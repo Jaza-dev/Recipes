@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors'
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
+import morgan from 'morgan'
 
 import guestRouter from './routes/Guest.routes';
 import userRouter from './routes/User.routes';
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors({ origin: "http://localhost:4200" }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(morgan('dev'));
 
 dotenv.config(); // loading env variables
 

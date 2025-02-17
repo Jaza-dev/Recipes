@@ -40,7 +40,6 @@ export class UserController {
 
             res.clearCookie("token", {
                 httpOnly: true,
-                secure: true,
                 sameSite: "strict",
             });
 

@@ -1,1 +1,18 @@
-<p>login works!</p>
+<div class="container">
+    <br><br><br><br>
+    <div class="card shadow p-4 mx-auto mt-5" style="max-width: 400px; border-radius: 15px;">
+
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" placeholder="Enter your email" [(ngModel)]="email">
+
+        <label class="form-label mt-2">Password</label>
+        <input type="password" class="form-control" placeholder="Enter your password" [(ngModel)]="password">
+
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-success" (click)="login()">Login</button>
+        </div>
+
+        <p *ngIf="errorMessage" class="text-danger"><br>{{errorMessage}}</p>
+    </div>
+  </div>
+  

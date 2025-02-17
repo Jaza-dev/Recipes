@@ -39,8 +39,8 @@ export class RegisterComponent {
     }
     this.guestService.register(this.name, this.email, this.password).subscribe(
       {
-        next: (resp:any)=>{
-          if(resp.message === "User registered successfully."){;
+        next: (resp:any) => {
+          if(resp.message === "User registered successfully."){
             this.router.navigate([""]);
           }
         },

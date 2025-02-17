@@ -13,12 +13,23 @@ export class GuestService {
   register(name:String, email:String, password:String) {
     
     const data = {
-      name:name,
-      email:email,
-      password:password
+      name,
+      email,
+      password
     }
 
     return this.http.post<String>(`${this.uri}/register`, data);
+  }
+
+  login(email:string, password:String) {
+
+    const data = {
+      email,
+      password
+    }
+
+    return this.http.post<String>(`${this.uri}/login`, data);
+
   }
 
 }
