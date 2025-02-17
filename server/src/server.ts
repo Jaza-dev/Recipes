@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose';
 import cors from 'cors'
 import cookieParser from "cookie-parser";
+import dotenv from 'dotenv'
 
 import guestRouter from './routes/Guest.routes';
 import userRouter from './routes/User.routes';
@@ -14,7 +15,9 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-mongoose.connect('mongodb://127.0.0.1:27017/Recipes');
+dotenv.config(); // loading env variables
+
+mongoose.connect(process.env.DATABASE_URL as string);
 
 const router = express.Router();
 

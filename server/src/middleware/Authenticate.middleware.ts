@@ -1,9 +1,8 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import { secretKey } from '../controllers/Guest.controller'
 
 interface AuthenticatedRequest extends express.Request {
-    user?: any; // Use `any` or define a specific type
+    user?: any;
 }
 
 let authenticateUser = (req: AuthenticatedRequest, res: express.Response, next: express.NextFunction) => {
@@ -14,6 +13,11 @@ let authenticateUser = (req: AuthenticatedRequest, res: express.Response, next: 
     }
 
     try {
+        if(!process.env.SECRET_KEY) {
+            throw new Error("SECRET_KEY is missing in environment variables");
+        }
+        const secretKey = process.env.SECRET_KEY;
+        
         const decoded = jwt.verify(token, secretKey);
         req.user = decoded;
         next();

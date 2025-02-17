@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import UserModel from '../models/User.model';
 
-export const secretKey:string = "a4d9f3c9e7e8e3b0b8d1b8e93c88c8baf6f0b5c6e2d9f7a5e3a9b7d8e2b1c9f6";
+//export const secretKey:string = "a4d9f3c9e7e8e3b0b8d1b8e93c88c8baf6f0b5c6e2d9f7a5e3a9b7d8e2b1c9f6";
 
 export class GuestController {
 
@@ -49,6 +49,11 @@ export class GuestController {
                 const isMatch = await bcrypt.compare(password, user.password);
                 if(!isMatch) return res.status(400).json({ error: "Email or password are incorrect!" });
             }
+            
+            if(!process.env.SECRET_KEY) {
+                throw new Error("SECRET_KEY is missing in environment variables");
+            }
+            const secretKey = process.env.SECRET_KEY;
 
             const token = jwt.sign({userId: user._id}, secretKey, {expiresIn: "1h"});
 
