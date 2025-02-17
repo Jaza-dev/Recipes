@@ -1,10 +1,13 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import UserModel from '../models/User.model';
 
 interface AuthenticatedRequest extends express.Request {
     user?: any; // Use `any` or define a specific type
 }
+
+const secretKey:string = "a4d9f3c9e7e8e3b0b8d1b8e93c88c8baf6f0b5c6e2d9f7a5e3a9b7d8e2b1c9f6";
 
 export class UserController {
 
@@ -16,7 +19,7 @@ export class UserController {
         }
     
         try {
-            const decoded = jwt.verify(token, "your_secret_key");
+            const decoded = jwt.verify(token, secretKey);
             req.user = decoded;
             next();
         } catch (error) {
@@ -26,17 +29,22 @@ export class UserController {
 
     register = async (req: express.Request, res: express.Response) => {
         try {
+
+            const { name, surename, email, password } = req.body;
+
             // Check if the user already exists
-            if (await UserModel.exists({ email: req.body.email })) {
+            if (await UserModel.exists({ email })) {
                 return res.status(400).json({ error: "User with this email already exists!" });
             }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
     
             // Create a new user
             const newUser = new UserModel({
-                name: req.body.name,
-                surename: req.body.surename,
-                email: req.body.email,
-                password: req.body.password,
+                name,
+                surename,
+                email,
+                password: hashedPassword,
                 createdAt: new Date(),
             });
     
@@ -53,11 +61,16 @@ export class UserController {
         try {
             const { email, password } = req.body;
 
-            const user = await UserModel.findOne({ email, password });
+            const user = await UserModel.findOne({ email });
 
             if(!user) return res.status(400).json({ error: "Email or password are incorrect!" });
+            
+            if(user.password) {
+                const isMatch = await bcrypt.compare(password, user.password);
+                if(!isMatch) return res.status(400).json({ error: "Email or password are incorrect!" });
+            }
 
-            const token = jwt.sign({userId: user._id}, "your_secret_key", {expiresIn: "1h"});
+            const token = jwt.sign({userId: user._id}, secretKey, {expiresIn: "1h"});
 
             res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
 
@@ -73,7 +86,9 @@ export class UserController {
         try {
             const { password:newPassword } = req.body;
 
-            const updatedUser = await UserModel.findByIdAndUpdate(req.user.userId, { password:newPassword }, {new:true, runValidators:true});
+            const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+            const updatedUser = await UserModel.findByIdAndUpdate(req.user.userId, { password:hashedNewPassword }, {new:true, runValidators:true});
 
             if (!updatedUser) {
                 return res.status(404).json({ error: "User not found" });
@@ -92,6 +107,21 @@ export class UserController {
                 return res.status(404).json({ error: "User not found" });
             }
             res.json({ message: "User deleted successfully" });
+        } catch (err) {
+            res.status(500).json({ error: "Server error" });
+        }
+    }
+
+    logout = async (req: AuthenticatedRequest, res: express.Response) => {
+        try {
+
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+            });
+
+            res.json({ message: "Successfull logout" });
         } catch (err) {
             res.status(500).json({ error: "Server error" });
         }

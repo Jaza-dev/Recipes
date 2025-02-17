@@ -21,4 +21,9 @@ userRouter.route('/delete').delete(
     (req, res) => { new UserController().delete(req,res); }
 )
 
+userRouter.route('/logout').post(
+    (req, res, next) => { new UserController().authenticateUser(req,res, next) },
+    (req, res) => { new UserController().logout(req,res); }
+)
+
 export default userRouter;
