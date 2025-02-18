@@ -17,7 +17,7 @@ export class DashboardComponent {
         this.router.navigate([""]);
       },
       error: (error:any) => {
-        
+        this.router.navigate([""]);
       }
     })
   }

@@ -28,7 +28,7 @@ export class GuestService {
       password
     }
 
-    return this.http.post<String>(`${this.uri}/login`, data);
+    return this.http.post<String>(`${this.uri}/login`, data, { withCredentials: true });
 
   }
 

@@ -11,6 +11,6 @@ export class UserService {
   constructor(private http:HttpClient) { }
 
   logout() {
-    return this.http.post<String>(`${this.uri}/logout`, null);
+    return this.http.post<String>(`${this.uri}/logout`, {}, { withCredentials: true });
   }
 }

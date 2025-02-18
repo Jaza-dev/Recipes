@@ -54,7 +54,7 @@ export class GuestController {
 
             const token = jwt.sign({userId: user._id}, secretKey, {expiresIn: "1h"});
 
-            res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
+            res.cookie("token", token, { httpOnly: true, sameSite: "strict", secure:true });
 
             return res.status(200).json({ message: "Successful login!" });
 

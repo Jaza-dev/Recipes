@@ -41,6 +41,7 @@ export class UserController {
             res.clearCookie("token", {
                 httpOnly: true,
                 sameSite: "strict",
+                secure: true
             });
 
             res.json({ message: "Successfull logout" });
