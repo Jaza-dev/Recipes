@@ -9,7 +9,7 @@ let authenticateUser = (req: AuthenticatedRequest, res: express.Response, next: 
     const token = req.cookies.token; // Read token from cookie
 
     if (!token) {
-        return res.status(401).json({ error: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized" });
     }
 
     try {
@@ -22,7 +22,7 @@ let authenticateUser = (req: AuthenticatedRequest, res: express.Response, next: 
         req.user = decoded;
         next();
     } catch (error) {
-        return res.status(401).json({ error: "Invalid token" });
+        return res.status(401).json({ message: "Invalid token" });
     }
 };
 

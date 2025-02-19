@@ -10,6 +10,10 @@ export class GuestService {
 
   uri:string = 'http://localhost:4000/guest';
 
+  isAuthenticated() {
+    return this.http.post<{ authenticated:boolean }>(`${this.uri}/isAuthenticated`, {}, { withCredentials: true });
+  }
+
   register(name:String, email:String, password:String) {
     
     const data = {

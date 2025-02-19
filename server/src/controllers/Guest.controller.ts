@@ -5,6 +5,31 @@ import UserModel from '../models/User.model';
 
 export class GuestController {
 
+    isAuthenticated = async (req: express.Request, res: express.Response) => {
+        try {
+            const token = req.cookies.token; // Read token from cookie
+        
+            if (!token) {
+                return res.status(401).json({ authenticated: false });
+            }
+        
+            try {
+                if(!process.env.SECRET_KEY) {
+                    throw new Error("SECRET_KEY is missing in environment variables");
+                }
+
+                jwt.verify(token, process.env.SECRET_KEY);
+
+                return res.status(200).json( {authenticated: true});
+
+            } catch (error) {
+                return res.status(401).json({ authenticated: false });
+            }
+        } catch (err) {
+            res.status(500).json({ authenticated: false });
+        }
+    }
+
     register = async (req: express.Request, res: express.Response) => {
         try {
 
