@@ -23,6 +23,16 @@ export class RegisterComponent {
 
   showNextStep: boolean = false;
 
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
+  isValidPassword(password: string): boolean {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  }
+
   proceedToNextStep() {
     if (this.name.trim() !== '') {
       this.showNextStep = true;
@@ -33,6 +43,14 @@ export class RegisterComponent {
   }
 
   register() {
+    // if(!this.isValidPassword(this.password)){
+    //   this.errorMessage = "Password is not in correct format."
+    //   return;
+    // }
+    if(!this.isValidEmail(this.email)){
+      this.errorMessage = "E-mail is not in correct format."
+      return;
+    }
     if(this.password !== this.repeatedPassword) {
       this.errorMessage = "Password and repeated password need to be same."
       return;

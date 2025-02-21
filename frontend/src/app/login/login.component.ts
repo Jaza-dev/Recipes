@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GuestService } from '../services/guest.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +10,23 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  constructor(private guestService:GuestService, private router: Router) {}
+  constructor(private guestService:GuestService, private router: Router, private route:ActivatedRoute) {}
 
   email: string = '';
   password: string = '';
 
   errorMessage: string = '';
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe({
+        next: params => {
+          this.errorMessage = params.get('message') as string;
+        }
+      }
+    )
+  }
 
   login() {
     this.guestService.login(this.email, this.password).subscribe({

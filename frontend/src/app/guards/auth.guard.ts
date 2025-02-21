@@ -1,5 +1,4 @@
 import { CanActivate, Router } from '@angular/router';
-import { UserService } from '../services/user.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { GuestService } from '../services/guest.service';
@@ -17,7 +16,7 @@ export class AuthGuard implements CanActivate {
         return true;
       }), 
       catchError(error => {
-        this.router.navigate([""]);
+        this.router.navigate([""], { queryParams: { message: "Please login first." } });
         return of(false);
       })
     );
