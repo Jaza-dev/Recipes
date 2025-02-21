@@ -1,6 +1,13 @@
-<nav style="font-size: larger;">
-    <div class="d-flex flex-row-reverse">
-        <div class="p-2"><button type="button" class="btn btn-outline-dark" (click)="logout()">Logout</button></div>
-        <div class="p-2"><button type="button" class="btn btn-outline-dark" routerLink="/profile"><i class="bi bi-person-circle text-success"></i> My <span class="text-success">Profile</span></button></div>
+<nav class="d-flex justify-content-between align-items-center" style="font-size: larger;">
+    <div><a routerLink="/dashboard"><img src="logo-transperent.png" width="100" height="100" alt="logo"></a></div>
+    <div class="d-flex">
+        <div class="p-2">
+            <button type="button" class="btn btn-outline-dark" routerLink="/profile">
+                <i class="bi bi-person-circle text-success"></i> My <span class="text-success">Profile</span>
+            </button>
+        </div>
+        <div class="p-2">
+            <button type="button" class="btn btn-outline-dark" (click)="logout()"><span class="text-success">Logout</span></button>
+        </div>
     </div>
 </nav>

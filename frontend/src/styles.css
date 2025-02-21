@@ -5,3 +5,7 @@
 body {
     font-family: 'Libre Baskerville', serif;
 }
+
+.container-fluid{
+    padding-top: 0 !important;
+}
