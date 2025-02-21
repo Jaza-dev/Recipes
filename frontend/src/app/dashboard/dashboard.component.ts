@@ -9,6 +9,4 @@ import { NavigationComponent } from "../navigation/navigation.component";
 })
 export class DashboardComponent {
 
-
-
 }
