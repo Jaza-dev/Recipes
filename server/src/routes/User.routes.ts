@@ -12,8 +12,8 @@ userRouter.route('/getUserData').post(
     (req, res) => { new UserController().getUserData(req,res); }
 )
 
-userRouter.route('/changePassword').patch(
-    (req, res) => { new UserController().changePassword(req,res); }
+userRouter.route('/editProfile').patch(
+    (req, res) => { new UserController().editProfile(req,res); }
 )
 
 userRouter.route('/delete').delete(

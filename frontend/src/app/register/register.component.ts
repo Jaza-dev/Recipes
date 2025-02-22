@@ -52,7 +52,7 @@ export class RegisterComponent {
       return;
     }
     if(this.password !== this.repeatedPassword) {
-      this.errorMessage = "Password and repeated password need to be same."
+      this.errorMessage = "Password and repeated password must to be same."
       return;
     }
     this.guestService.register(this.name, this.email, this.password).subscribe(

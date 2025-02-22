@@ -17,4 +17,15 @@ export class UserService {
   logout() {
     return this.http.post<String>(`${this.uri}/logout`, {}, { withCredentials: true });
   }
+
+  editProfile(name:string, newPassword:string, oldPassword:string) {
+
+    const data = {
+      name, 
+      newPassword,
+      oldPassword
+    };
+
+    return this.http.patch<String>(`${this.uri}/editProfile`, data, { withCredentials: true });
+  }
 }

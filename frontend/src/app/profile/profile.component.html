@@ -1,46 +1,50 @@
-<div class="modal fade" id="profileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="profileModal" #profileModal data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content card shadow p-4 mx-auto mt-5">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="profileModalLabel">My Profile</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancle()"></button>
         </div>
         <form class="modal-body">
-            <form>
-                <label class="form-label mt-2">Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Enter your name" [(ngModel)]="name">
+            <label class="form-label mt-2">Name</label>
+            <input type="text" name="name" class="form-control" placeholder="Enter your name" [(ngModel)]="name">
 
-                <label class="form-label mt-2">Email</label>
-                <input type="email" name="email" class="form-control" disabled [(ngModel)]="email">
-    
-                <label class="form-label mt-2">Password</label>
-                <div class="input-group">
-                    <input [type]="showPassword ? 'text' : 'password'" name="password" class="form-control" placeholder="Enter your password">
-                    <button type="button" class="btn btn-outline-success opacity-75" (click)="togglePassword()">
-                        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-                    </button>
-                </div>
-                
-                <label class="form-label mt-2">Repeat Password</label>
-                <div class="input-group">
-                    <input [type]="showRepeatedPassword ? 'text' : 'password'" name="repeatedPassword" class="form-control" placeholder="Enter your password again">
-                    <button type="button" class="btn btn-outline-success opacity-75" (click)="toggleRepeatedPassword()">
-                        <i class="bi" [ngClass]="showRepeatedPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-                    </button>
-                </div>
-                
-            </form>
+            <label class="form-label mt-2">Email</label>
+            <input type="email" name="email" class="form-control" disabled [(ngModel)]="email">
+
+            <label class="form-label mt-2">New Password</label>
+            <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" name="password" class="form-control" placeholder="Enter your new password" [(ngModel)]="newPassword">
+                <button type="button" class="btn btn-outline-success opacity-75" (click)="togglePassword()">
+                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+            </div>
+            
+            <label class="form-label mt-2">Repeat New Password</label>
+            <div class="input-group">
+                <input [type]="showRepeatedPassword ? 'text' : 'password'" name="repeatedPassword" class="form-control" placeholder="Enter your new password again" [(ngModel)]="repeatedNewPassword">
+                <button type="button" class="btn btn-outline-success opacity-75" (click)="toggleRepeatedPassword()">
+                    <i class="bi" [ngClass]="showRepeatedPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+            </div>
+
+            <hr>
+            <h5>Security</h5>
+            <label class="form-label mt-2">Old Password</label>
+            <div class="input-group">
+                <input [type]="showOldPassword ? 'text' : 'password'" name="oldPassword" class="form-control" placeholder="Enter your old password" [(ngModel)]="oldPassword">
+                <button type="button" class="btn btn-outline-success opacity-75" (click)="toggleOldPassword()">
+                    <i class="bi" [ngClass]="showOldPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+            </div>
         </form>
         <div class="modal-footer d-flex align-items-center">
-            <p *ngIf="errorMessage" class="text-danger mb-0">{{ errorMessage }}</p>
-        
-            <!-- Invisible spacer div to push buttons when there's an error -->
-            <div *ngIf="errorMessage" class="flex-grow-1"></div>
-        
-            <div>
-                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Save</button>
+            <div class="me-auto">
+                <p *ngIf="errorMessage" class="text-danger mb-0">{{ errorMessage }}</p>
+                <p *ngIf="successMessage" class="text-success mb-0">{{ successMessage }}</p>
             </div>
+        
+            <button type="button" class="btn btn-success" (click)="save()">Save</button>
         </div>
       </div>
     </div>
