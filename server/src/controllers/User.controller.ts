@@ -5,6 +5,20 @@ import { AuthenticatedRequest } from '../middleware/Authenticate.middleware';
 
 export class UserController {
 
+    getUserData = async (req: AuthenticatedRequest, res: express.Response) => {
+        try {
+            const user = await UserModel.findById(req.user.userId);
+
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            return res.json({ name: user.name, email: user.email });
+        } catch (err) {
+            res.status(500).json({ message: "Server error" });
+        }
+    }
+
     changePassword = async (req: AuthenticatedRequest, res: express.Response) => {
         try {
             const { password:newPassword } = req.body;

@@ -10,6 +10,10 @@ export class UserService {
 
   constructor(private http:HttpClient) { }
 
+  getUserData() {
+    return this.http.post<Object>(`${this.uri}/getUserData`, {}, { withCredentials: true });
+  }
+
   logout() {
     return this.http.post<String>(`${this.uri}/logout`, {}, { withCredentials: true });
   }

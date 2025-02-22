@@ -8,6 +8,10 @@ userRouter.use(
     (req, res, next) => { authenticateUser(req,res, next) }
 )
 
+userRouter.route('/getUserData').post(
+    (req, res) => { new UserController().getUserData(req,res); }
+)
+
 userRouter.route('/changePassword').patch(
     (req, res) => { new UserController().changePassword(req,res); }
 )
