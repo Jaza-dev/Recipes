@@ -24,15 +24,14 @@ export class UserController {
             const { name, newPassword, oldPassword } = req.body;
     
             if (!name && !newPassword) {
-                return res.status(400).json({ message: "No data provided for update" });
+                return res.status(400).json({ message: "No data provided for update." });
             }
     
             const user = await UserModel.findById(req.user.userId);
             if (!user) {
-                return res.status(404).json({ message: "User not found" });
+                return res.status(404).json({ message: "User not found." });
             }
     
-            console.log(oldPassword);
             const isMatch = await bcrypt.compare(oldPassword, user.password as string);
             if (!isMatch) {
                 return res.status(401).json({ message: "Old password is incorrect." });
@@ -53,20 +52,39 @@ export class UserController {
             res.json({ message: "Your profile has been updated." });
     
         } catch (err) {
-            res.status(500).json({ message: "Server error" });
+            res.status(500).json({ message: "Server error." });
         }
     };
     
 
     delete = async (req: AuthenticatedRequest, res: express.Response) => {
         try {
+            const password = req.body.password;
+
+            const user = await UserModel.findById(req.user.userId); 
+            if (!user) {
+                return res.status(404).json({ message: "User not found." });
+            }
+    
+            const isMatch = await bcrypt.compare(password, user.password as string);
+            if (!isMatch) {
+                return res.status(401).json({ message: "Password is incorrect." });
+            }
+
             const deletedUser = await UserModel.findByIdAndDelete(req.user.userId);
             if (!deletedUser) {
                 return res.status(404).json({ message: "User not found" });
             }
+
+            res.clearCookie("token", {
+                httpOnly: true,
+                sameSite: "strict",
+                secure: true
+            });
+
             res.json({ message: "User deleted successfully" });
         } catch (err) {
-            res.status(500).json({ message: "Server error" });
+            res.status(500).json({ message: "Server error." });
         }
     }
 
@@ -81,7 +99,7 @@ export class UserController {
 
             res.json({ message: "Successfull logout" });
         } catch (err) {
-            res.status(500).json({ message: "Server error" });
+            res.status(500).json({ message: "Server error." });
         }
     }
 }

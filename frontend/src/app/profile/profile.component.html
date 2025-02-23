@@ -1,9 +1,9 @@
-<div class="modal fade" id="profileModal" #profileModal data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="profileModal"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content card shadow p-4 mx-auto mt-5">
+        <div class="modal-content card shadow p-4 mx-auto mt-5">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="profileModalLabel">My Profile</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancle()"></button>
+            <h1 class="modal-title fs-5" id="profileModalLabel">My Profile</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancle()"></button>
         </div>
         <form class="modal-body">
             <label class="form-label mt-2">Name</label>
@@ -28,15 +28,17 @@
                 </button>
             </div>
 
-            <hr>
+            <br>
             <h5>Security</h5>
-            <label class="form-label mt-2">Old Password</label>
+            <label class="form-label mt-2">Password</label>
             <div class="input-group">
-                <input [type]="showOldPassword ? 'text' : 'password'" name="oldPassword" class="form-control" placeholder="Enter your old password" [(ngModel)]="oldPassword">
+                <input [type]="showOldPassword ? 'text' : 'password'" [class.is-invalid]="submitted && !oldPassword" name="oldPassword" class="form-control" placeholder="Enter your password" [(ngModel)]="oldPassword">
                 <button type="button" class="btn btn-outline-success opacity-75" (click)="toggleOldPassword()">
                     <i class="bi" [ngClass]="showOldPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                 </button>
             </div>
+            <br>
+            <button class="btn btn-outline-danger" (click)="delete()"><i class="bi bi-exclamation-triangle text-warning"></i> Delete your profile</button>
         </form>
         <div class="modal-footer d-flex align-items-center">
             <div class="me-auto">
@@ -46,6 +48,6 @@
         
             <button type="button" class="btn btn-success" (click)="save()">Save</button>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
+</div>

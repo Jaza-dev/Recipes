@@ -16,7 +16,7 @@ userRouter.route('/editProfile').patch(
     (req, res) => { new UserController().editProfile(req,res); }
 )
 
-userRouter.route('/delete').delete(
+userRouter.route('/delete').post(
     (req, res) => { new UserController().delete(req,res); }
 )
 

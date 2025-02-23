@@ -28,4 +28,13 @@ export class UserService {
 
     return this.http.patch<String>(`${this.uri}/editProfile`, data, { withCredentials: true });
   }
+
+  deleteUser(password:string) {
+
+    const data = {
+      password
+    };
+
+    return this.http.post<String>(`${this.uri}/delete`, data, { withCredentials: true });
+  }
 }

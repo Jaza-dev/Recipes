@@ -8,7 +8,7 @@ import morgan from 'morgan'
 import guestRouter from './routes/Guest.routes';
 import userRouter from './routes/User.routes';
 import recipeRouter from './routes/Recipe.routes';
-import recipeCollectionRouter from './routes/RecipeCollection.routes';
+import recipeBookRouter from './routes/RecipeBook.routes';
 
 const app = express();
 
@@ -30,8 +30,8 @@ const router = express.Router();
 
 router.use('/guest', guestRouter);
 router.use('/user', userRouter);
+router.use('/recipeBook', recipeBookRouter);
 router.use('/recipe', recipeRouter);
-router.use('/recipeCollection', recipeCollectionRouter);
 
 app.use('/', router);
 
