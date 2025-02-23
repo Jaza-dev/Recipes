@@ -1,7 +1,12 @@
 import express from 'express'
 import { RecipeBookController } from '../controllers/RecipeBook.controller';
+import { authenticateUser } from '../middleware/Authenticate.middleware';
 
 const recipeBookRouter = express.Router();
+
+recipeBookRouter.use(
+    (req, res, next) => { authenticateUser(req,res, next) }
+)
 
 recipeBookRouter.route('/create').post(
     (req, res) => { new RecipeBookController().create(req, res); }

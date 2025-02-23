@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8 text-center">
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#newRecipeBookModal">
+            <i class="bi bi-journal-plus"></i> Create new recipe book
+        </button>
+    </div>
+    <div class="col-2"></div>
+</div>
+
+<div class="modal fade" id="newRecipeBookModal" tabindex="-1" aria-labelledby="newRecipeBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newRecipeBookModalLabel">Recipe Book</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancle()"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipeBookName" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" id="recipeBookName" placeholder="Enter recipe book name" [(ngModel)]="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipeBookDescription" class="form-label">Description</label>
+                        <textarea class="form-control" name="description" id="recipeBookDescription" rows="3" placeholder="Enter description" [(ngModel)]="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipeBookColor" class="form-label">Pick a Color</label>
+                        <input type="color" name="color" class="form-control form-control-color" id="recipeBookColor" [(ngModel)]="color">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancle()">Cancle</button>
+                <button type="submit" class="btn btn-success" data-bs-dismiss="modal" (click)="create()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" 
+         class="toast align-items-center border-0 text-white" 
+         [ngClass]="{'bg-success': successMessage, 'bg-danger': errorMessage}" 
+         role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ successMessage || errorMessage }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
